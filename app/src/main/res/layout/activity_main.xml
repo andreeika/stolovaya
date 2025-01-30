@@ -9,24 +9,25 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="162dp"
-        android:layout_height="65dp"
-        android:backgroundTint="#E53935"
-        android:text="Корзина"
+        android:layout_width="198dp"
+        android:layout_height="69dp"
+        android:background="@drawable/button_background"
+        android:text="Корзина 🛒"
         android:textSize="24sp"
-        app:cornerRadius="0dp"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.079" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="300dp"
         android:layout_height="400dp"
-        android:background="#2196F3"
+        android:background="@drawable/rounded_background"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
