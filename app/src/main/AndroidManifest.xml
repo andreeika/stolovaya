@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Stolovaya"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity_Napitki"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Deserts"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Stolovaya">
@@ -22,6 +28,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity_Bulochki"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Garnir"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Myaso"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Soup"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Salades"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity_Korzina"
+            android:exported="false" />
     </application>
 
 </manifest>
