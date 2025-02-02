@@ -9,18 +9,22 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="162dp"
-        android:layout_height="65dp"
-        android:backgroundTint="#E53935"
-        android:text="Корзина"
+        android:layout_width="185dp"
+        android:layout_height="54dp"
+        android:layout_x="201dp"
+        android:layout_y="77dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Корзина 🛒"
+        android:textAlignment="textStart"
         android:textSize="24sp"
-        app:cornerRadius="0dp"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.057" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -36,14 +40,14 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="96dp"
-        android:layout_height="156dp"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
+        app:layout_constraintVertical_bias="0.037"
         app:srcCompat="@drawable/mask_group" />
 
     <TextView
@@ -60,6 +64,6 @@
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintVertical_bias="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
