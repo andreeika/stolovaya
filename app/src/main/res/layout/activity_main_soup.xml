@@ -8,14 +8,14 @@
     tools:context=".MainActivity_Soup">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="185dp"
+        android:id="@+id/button8"
+        android:layout_width="200dp"
         android:layout_height="54dp"
         android:layout_x="201dp"
         android:layout_y="77dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Корзина 🛒"
+        android:text="@string/korzina"
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:backgroundTint="@null"

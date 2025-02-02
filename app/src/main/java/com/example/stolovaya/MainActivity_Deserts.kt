@@ -17,7 +17,7 @@ class MainActivity_Deserts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main_bulochki)
+        setContentView(R.layout.activity_main_deserts)
 
         //Цвет для строки состояния
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -29,7 +29,7 @@ class MainActivity_Deserts : AppCompatActivity() {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
-        button_korzina = findViewById(R.id.button)
+        button_korzina = findViewById(R.id.button3)
 
         button_korzina.setOnClickListener {
             val intent = Intent(this@MainActivity_Deserts, MainActivity_Korzina::class.java)

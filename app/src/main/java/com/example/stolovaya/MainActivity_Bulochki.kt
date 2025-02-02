@@ -29,7 +29,7 @@ class MainActivity_Bulochki : AppCompatActivity() {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
-        button_korzina = findViewById(R.id.button)
+        button_korzina = findViewById(R.id.button2)
 
         button_korzina.setOnClickListener {
             val intent = Intent(this@MainActivity_Bulochki, MainActivity_Korzina::class.java)
