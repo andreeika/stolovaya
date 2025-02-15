@@ -3,13 +3,17 @@ package com.example.stolovaya
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.VideoView
+import android.net.Uri
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.widget.FrameLayout;
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class MainActivity : AppCompatActivity() {
     private lateinit var textView_salades: TextView
@@ -20,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textView_deserts: TextView
     private lateinit var textView_napitki: TextView
     private lateinit var button_korzina: Button
+    private lateinit var sibsiu_logo: ImageView
+    private lateinit var terpi: VideoView
+    private var counter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,27 @@ class MainActivity : AppCompatActivity() {
         textView_deserts = findViewById(R.id.textView9)
         textView_napitki = findViewById(R.id.textView7)
         button_korzina = findViewById(R.id.button)
+        sibsiu_logo = findViewById(R.id.imageView2)
+        terpi = findViewById(R.id.videoView2)
+        val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir, textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo, terpi)
+
+
+        sibsiu_logo.setOnClickListener{
+            counter += 1
+            val url = Uri.parse("android.resource://" + packageName + "/" + R.raw.terpi_video)
+            terpi.setVideoURI(url)
+            if (counter == 30){
+                Log.d("logo", "терпи")
+                for (i in views) i.isClickable = false
+                counter = 0
+                terpi.visibility = View.VISIBLE
+                terpi.start()
+                terpi.setOnCompletionListener {
+                   for (i in views) i.isClickable = true
+                    terpi.visibility = View.GONE
+                }
+            }
+        }
 
         // Обработчик нажатия на кнопку и переход на окно
 
