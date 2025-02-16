@@ -9,10 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.VideoView
 import android.net.Uri
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import android.widget.FrameLayout;
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button_korzina: Button
     private lateinit var sibsiu_logo: ImageView
     private lateinit var terpi: VideoView
+    private lateinit var logo: ImageView
     private var counter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         button_korzina = findViewById(R.id.button)
         sibsiu_logo = findViewById(R.id.imageView2)
         terpi = findViewById(R.id.videoView2)
+        logo = findViewById(R.id.imageView4)
         val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir, textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo, terpi)
 
 
@@ -116,7 +121,29 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        logo.setOnClickListener { view ->
+            showPopupMenu(view)
     }
 
+}
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.my_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.menu_item_1 -> { val intent = Intent(this@MainActivity, MainActivity_Login::class.java)
+                    startActivity(intent)
+                    true // Обработано
+                }
+                R.id.menu_item_2 -> {
+                    true // Обработано
+                }
+
+                else -> false // Не обработано
+            }
+        }
+
+        popupMenu.show()
+    }
 }
