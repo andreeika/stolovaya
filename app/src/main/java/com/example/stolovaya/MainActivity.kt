@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textView_bulochki: TextView
     private lateinit var textView_deserts: TextView
     private lateinit var textView_napitki: TextView
+    private lateinit var textView_zavtrak: TextView
+    private lateinit var textView_sauces: TextView
     private lateinit var button_korzina: Button
     private lateinit var sibsiu_logo: ImageView
     private lateinit var terpi: VideoView
@@ -54,11 +56,15 @@ class MainActivity : AppCompatActivity() {
         textView_bulochki = findViewById(R.id.textView6)
         textView_deserts = findViewById(R.id.textView9)
         textView_napitki = findViewById(R.id.textView7)
+        textView_zavtrak = findViewById(R.id.textView10)
+        textView_sauces = findViewById(R.id.textView11)
         button_korzina = findViewById(R.id.button)
         sibsiu_logo = findViewById(R.id.imageView2)
         terpi = findViewById(R.id.videoView2)
         logo = findViewById(R.id.imageView4)
-        val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir, textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo, terpi, logo)
+        val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir,
+            textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo,
+            terpi, logo, textView_zavtrak, textView_sauces)
 
 
         sibsiu_logo.setOnClickListener{
@@ -100,7 +106,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         textView_soup.setOnClickListener {
             val intent = Intent(this@MainActivity, MainActivity_Soup::class.java)
             startActivity(intent)
@@ -121,6 +126,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        textView_zavtrak.setOnClickListener {
+            val intent = Intent(this@MainActivity, MainActivity_Zavtrak::class.java)
+            startActivity(intent)
+        }
+
+        textView_sauces.setOnClickListener {
+            val intent = Intent(this@MainActivity, MainActivity_Sauces::class.java)
+            startActivity(intent)
+        }
         logo.setOnClickListener { view ->
             showPopupMenu(view)
     }
