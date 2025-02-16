@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         sibsiu_logo = findViewById(R.id.imageView2)
         terpi = findViewById(R.id.videoView2)
         logo = findViewById(R.id.imageView4)
-        val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir, textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo, terpi)
+        val views = arrayOf(textView_salades, textView_soup, textView_myaso, textView_garnir, textView_bulochki, textView_deserts, textView_napitki, button_korzina, sibsiu_logo, terpi, logo)
 
 
         sibsiu_logo.setOnClickListener{
