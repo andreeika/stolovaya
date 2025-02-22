@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Stolovaya"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity_OknoPersonala"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity_Sauces"
             android:exported="false" />
         <activity
