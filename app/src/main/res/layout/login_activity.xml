@@ -9,15 +9,30 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="308dp"
-        android:layout_height="63dp"
+        android:id="@+id/imageView23"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_x="21dp"
+        android:layout_y="63dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915"
+        app:layout_constraintVertical_bias="0.058"
+        app:srcCompat="@drawable/mask_group" />
+
+    <ImageView
+        android:id="@+id/imageView24"
+        android:layout_width="191dp"
+        android:layout_height="54dp"
+        android:layout_x="106dp"
+        android:layout_y="777dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.923"
         app:srcCompat="@drawable/sibsiu_logo_main" />
 
     <Button
@@ -38,20 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.716" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="83dp"
-        android:layout_height="83dp"
-        android:layout_x="21dp"
-        android:layout_y="63dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
-        app:srcCompat="@drawable/mask_group" />
 
     <TextView
         android:id="@+id/textView2"

@@ -36,7 +36,7 @@ class MainActivity_Login : AppCompatActivity() {
         }
 
         lateinit var logo: ImageView
-        logo = findViewById(R.id.imageView4)
+        logo = findViewById(R.id.imageView23)
         logo.setOnClickListener{
             val intent = Intent(this@MainActivity_Login, MainActivity::class.java)
             startActivity(intent)

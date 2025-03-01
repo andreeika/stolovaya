@@ -8,43 +8,50 @@
     tools:context=".MainActivity_Soup">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="162dp"
-        android:layout_height="65dp"
-        android:backgroundTint="#E53935"
-        android:text="Корзина"
+        android:id="@+id/button11"
+        android:layout_width="200dp"
+        android:layout_height="54dp"
+        android:layout_x="201dp"
+        android:layout_y="77dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Очистить"
+        android:textAlignment="textStart"
         android:textSize="24sp"
-        app:cornerRadius="0dp"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.078" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="308dp"
-        android:layout_height="63dp"
+        android:id="@+id/imageView3"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_x="21dp"
+        android:layout_y="63dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915"
-        app:srcCompat="@drawable/sibsiu_logo_main" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="96dp"
-        android:layout_height="156dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
+        app:layout_constraintVertical_bias="0.058"
         app:srcCompat="@drawable/mask_group" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="191dp"
+        android:layout_height="54dp"
+        android:layout_x="106dp"
+        android:layout_y="777dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.923"
+        app:srcCompat="@drawable/sibsiu_logo_main" />
 
     <TextView
         android:id="@+id/textView3"
