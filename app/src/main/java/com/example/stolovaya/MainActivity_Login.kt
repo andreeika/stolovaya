@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 
 class MainActivity_Login : AppCompatActivity() {
     private lateinit var editTextUsername: EditText
@@ -36,7 +35,7 @@ class MainActivity_Login : AppCompatActivity() {
         }
 
         lateinit var logo: ImageView
-        logo = findViewById(R.id.imageView23)
+        logo = findViewById(R.id.imageView22)
         logo.setOnClickListener{
             val intent = Intent(this@MainActivity_Login, MainActivity::class.java)
             startActivity(intent)

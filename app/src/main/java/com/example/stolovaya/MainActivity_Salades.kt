@@ -1,6 +1,8 @@
 package com.example.stolovaya
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -11,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.io.ByteArrayInputStream
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
@@ -19,6 +24,9 @@ class MainActivity_Salades : AppCompatActivity() {
     var connect: Connection? = null
     var connectionResult: String = ""
     private lateinit var button_korzina: Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: CustomAdapter
+    var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,22 +50,44 @@ class MainActivity_Salades : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        val data = ArrayList<ItemsViewModel>()
 
-        val tx1: TextView = findViewById(R.id.textView12)
-        val tx2: TextView = findViewById(R.id.textView13)
+
+
+        val adapter = CustomAdapter(data)
+        recyclerview.adapter = adapter
+
+
+//        val tx1: TextView = findViewById(R.id.textView12)
+//        val tx2: TextView = findViewById(R.id.textView13)
 
         try {
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String =
-                    "select * from Ингредиенты"; //да я все сделал
+                var query: String = "SELECT name_dish, photo_dish FROM Блюда where id_dish = 1"
+
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);
 
                 while (rs.next()) {
-                    tx1.setText(rs.getString(1));
-                    tx2.setText(rs.getString(2));
+
+//                    tx1.setText(rs.getString(1));
+//                    tx2.setText(rs.getString(2));
+                    val name = rs.getString("name_dish")
+
+
+                    val imageBytes: ByteArray = rs.getBytes("photo_dish")
+                    val inputStream = ByteArrayInputStream(imageBytes)
+                    bitmap = BitmapFactory.decodeStream(inputStream)
+
+
+                    // Добавление данных в список
+                    data.add(ItemsViewModel(bitmap, name))
+
+
                 }
 
 

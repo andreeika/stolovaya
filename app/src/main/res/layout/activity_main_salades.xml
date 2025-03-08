@@ -67,30 +67,18 @@
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintVertical_bias="0.193" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="218dp"
-        android:layout_height="73dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="390dp"
+        android:layout_height="428dp"
+        android:layout_marginTop="188dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="218dp"
-        android:layout_height="73dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.639" />
+        tools:itemCount="5"
+        tools:listitem="@layout/card_view_design" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
