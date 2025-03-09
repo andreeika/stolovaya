@@ -39,7 +39,8 @@ android {
 }
 
 dependencies {
-    implementation(files("C:\\Users\\andre\\AndroidStudioProjects\\stolovaya\\app\\lib\\jtds-1.3.1.jar"))
+    implementation(libs.jtds)
+    implementation (libs.androidx.cardview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

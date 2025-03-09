@@ -5,28 +5,30 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
 
-class MainActivity_Salades : AppCompatActivity() {
+class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListener {
     var connect: Connection? = null
     var connectionResult: String = ""
-    private lateinit var button_korzina: Button
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CustomAdapter
-    var bitmap: Bitmap? = null
+    private lateinit var button_korzina: Button //кнопка перехода в корзину
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,60 +47,71 @@ class MainActivity_Salades : AppCompatActivity() {
 
         button_korzina = findViewById(R.id.button7)
 
-        button_korzina.setOnClickListener {
+        button_korzina.setOnClickListener {//Переход в корзину
             val intent = Intent(this@MainActivity_Salades, MainActivity_Korzina::class.java)
             startActivity(intent)
         }
 
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerview.layoutManager = GridLayoutManager(this, 2)
         val data = ArrayList<ItemsViewModel>()
 
-
-
-        val adapter = CustomAdapter(data)
+        val adapter = CustomAdapter(data, this)//Передаём информацию data при помощи интерфейса listener
         recyclerview.adapter = adapter
-
-
-//        val tx1: TextView = findViewById(R.id.textView12)
-//        val tx2: TextView = findViewById(R.id.textView13)
 
         try {
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String = "SELECT name_dish, photo_dish FROM Блюда where id_dish = 1"
+                var query: String = "SELECT name_dish, photo_dish  FROM Блюда where id_dish in (1, 52, 64, 68, 77)"
 
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);
 
+                val tempList = mutableListOf<Pair<Bitmap?, String>>()
                 while (rs.next()) {
 
-//                    tx1.setText(rs.getString(1));
-//                    tx2.setText(rs.getString(2));
                     val name = rs.getString("name_dish")
-
-
-                    val imageBytes: ByteArray = rs.getBytes("photo_dish")
-                    val inputStream = ByteArrayInputStream(imageBytes)
-                    bitmap = BitmapFactory.decodeStream(inputStream)
-
-
-                    // Добавление данных в список
-                    data.add(ItemsViewModel(bitmap, name))
-
-
+                    val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
+                    val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    tempList.add(Pair(bitmap, name))
                 }
+                for (i in 0 until tempList.size step 1) {
+                    val item1 = tempList[i]
 
-
+                    val groupedItem = ItemsViewModel(
+                        item1.first, // image (Bitmap?)
+                        item1.second  // text (String)
+                    )
+                    data.add(groupedItem)
+                }
             } else {
                 connectionResult = "Check Connection";
             }
-        } catch (ex: Exception) {
+        }
+        catch (ex: Exception) {
+
+        }
     }
 
+    // Реализация метода интерфейса переноса блюд в корзину
+    override fun onKorzinaClick(item: ItemsViewModel) {
+        val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
+        // Преобразуем Bitmap в Base64
+        val stream = ByteArrayOutputStream()
+        item.image?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val imageBytes = stream.toByteArray()
+        val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
+        // Генерируем уникальный ключ для каждого элемента
+        val uniqueKey = "item_${System.currentTimeMillis()}"
 
+        // Сохраняем данные
+        editor.putString("${uniqueKey}_name", item.text) // Название блюда
+        editor.putString("${uniqueKey}_image", imageBase64) // Изображение в Base64
+        editor.apply()
 
-        }}
+    }
+}
