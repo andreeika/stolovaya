@@ -8,7 +8,7 @@
     tools:context=".MainActivity_Soup">
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btnClearKorzina"
         android:layout_width="200dp"
         android:layout_height="54dp"
         android:layout_x="201dp"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.078" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/logoBackKorzina"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_x="21dp"
@@ -67,6 +67,16 @@
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintVertical_bias="0.19" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvKorzina"
+        android:layout_width="390dp"
+        android:layout_height="428dp"
+        android:layout_marginTop="188dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
