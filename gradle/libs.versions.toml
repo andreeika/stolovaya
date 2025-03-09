@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+jtdsVersion = "1.3.1"
 kotlin = "1.9.24"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -33,6 +34,7 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+net-jtds = { module = "net.sourceforge.jtds:jtds", version.ref = "jtdsVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

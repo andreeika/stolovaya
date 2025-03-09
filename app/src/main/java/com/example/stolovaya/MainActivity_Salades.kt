@@ -67,28 +67,38 @@ class MainActivity_Salades : AppCompatActivity() {
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String = "SELECT name_dish, photo_dish FROM Блюда where id_dish = 1"
+                var query: String = "SELECT name_dish, photo_dish FROM Блюда where id_dish in (1, 64, 68, 89, 118) "
 
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);
-
+                val tempList = mutableListOf<Pair<Bitmap?, String>>()
                 while (rs.next()) {
 
 //                    tx1.setText(rs.getString(1));
 //                    tx2.setText(rs.getString(2));
                     val name = rs.getString("name_dish")
-
-
-                    val imageBytes: ByteArray = rs.getBytes("photo_dish")
-                    val inputStream = ByteArrayInputStream(imageBytes)
-                    bitmap = BitmapFactory.decodeStream(inputStream)
-
-
-                    // Добавление данных в список
-                    data.add(ItemsViewModel(bitmap, name))
-
-
+                    val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
+                    val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    tempList.add(Pair(bitmap, name))
                 }
+
+                for (i in 0 until tempList.size step 2) {
+                    val item1 = tempList[i]
+                    val item2 = if (i + 1 < tempList.size) tempList[i + 1] else null
+
+                    val groupedItem = ItemsViewModel(
+                        item1.first, // image (Bitmap?)
+                        item1.second,  // text (String)
+                        item2?.first, // image2 (Bitmap?)
+                        item2?.second?: "" // text2 (String)
+                    )
+                    data.add(groupedItem)
+                }
+                    // Добавление данных в список
+//                    data.add(ItemsViewModel(bitmap, name))
+
+
+
 
 
             } else {

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class ItemsViewModel(val image: Bitmap?, val text: String)
+data class ItemsViewModel(val image: Bitmap?, val text: String, val image2: Bitmap?, val text2: String)
 class CustomAdapter(private val mList: List<ItemsViewModel>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
@@ -25,21 +25,13 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) :
 
         val ItemsViewModel = mList[position]
 
+        // Установка данных для первой картинки и подписи
+        holder.imageView.setImageBitmap(ItemsViewModel.image)
         holder.textView.text = ItemsViewModel.text
 
-
-        // Установка картинки
-        ItemsViewModel.image?.let {
-            holder.imageView.setImageBitmap(it)
-
-        } ?: run {
-
-        }
-        holder.imageView.setImageBitmap(ItemsViewModel.image)
-        holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        holder.imageView.setAdjustViewBounds(true);
-
-
+        // Установка данных для второй картинки и подписи
+        holder.imageView3.setImageBitmap(ItemsViewModel.image2)
+        holder.textView14.text = ItemsViewModel.text2
 
 
 
