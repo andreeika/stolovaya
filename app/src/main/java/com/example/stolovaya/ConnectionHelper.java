@@ -12,11 +12,11 @@ public class ConnectionHelper {
     @SuppressLint("NewApi")
     public Connection connectionclass()
     {
-        ip = "192.168.0.180";
-        database = "stolovaya";
-        uname = "user2";
-        pass = "user123456";
-        port = "1433";
+        ip = "192.168.0.32";
+        database = "столовая";
+        uname = "youruser";
+        pass = "password";
+        port = "52446";
         // ладно, вроде точно
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

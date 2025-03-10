@@ -63,7 +63,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String = "SELECT name_dish, photo_dish  FROM Блюда where id_dish in (1, 89, 118)"
+                var query: String = "SELECT name_dish, photo_dish  FROM Блюда where id_dish in (1)"
 
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);
