@@ -39,8 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.jtds)
-    implementation (libs.androidx.cardview)
+    implementation(libs.net.jtds)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
