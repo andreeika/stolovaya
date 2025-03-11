@@ -113,7 +113,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
                 connect = connectionHelper.connectionclass()
                 connect?.use { conn ->
                     // Удаление всех данных из таблицы
-                    val deleteQuery = "DELETE FROM Меню"
+                    val deleteQuery = "TRUNCATE TABLE Меню"
                     conn.createStatement().use { stmt ->
                         stmt.executeUpdate(deleteQuery)
                     }
