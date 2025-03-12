@@ -12,18 +12,24 @@ public class ConnectionHelper {
     @SuppressLint("NewApi")
     public Connection connectionclass()
     {
-        ip = "192.168.0.180";
-        database = "stolovaya";
-        uname = "user2";
-        pass = "user123456";
-        port = "1433";
-        //андрюх мое закомментируй потом, а то я устал уже постоянно менять
+//        ip = "192.168.0.180";
+//        database = "stolovaya";
+//        uname = "user2";
+//        pass = "user123456";
+//        port = "1433"; андрюх мое закомментируй потом, а то я устал уже постоянно менять
+
+//        ip = "192.168.0.102";
+//        database = "proekt3";
+//        uname = "ya_user";
+//        pass = "aboba123";
+//        port = "1433"; андрюх, это тоже не трогай
 
 //        ip = "192.168.0.32";
 //        database = "столовая";
 //        uname = "youruser";
 //        pass = "password";
 //        port = "52446";
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
