@@ -55,7 +55,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
-        val btn: Button = itemView.findViewById(R.id.btnKorzina)
+        val btn: Button = itemView.findViewById(R.id.buttonAdd)
     }
 
 
