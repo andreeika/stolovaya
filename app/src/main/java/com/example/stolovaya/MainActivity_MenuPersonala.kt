@@ -102,7 +102,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
         saveButton = findViewById(R.id.saveButton)
         saveButton.setOnClickListener {
             Toast.makeText(this, "Данные сохраняются...", Toast.LENGTH_SHORT).show()
-            Log.d("Cat", items.toString())
+            saveButton.isEnabled = false
             try {
                 val selectedItems = items.filter { it.isSelected }
                 if (selectedItems.isEmpty()) {

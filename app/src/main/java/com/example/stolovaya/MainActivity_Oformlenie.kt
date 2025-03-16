@@ -12,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import java.sql.Connection
+import kotlin.random.Random
 
 class MainActivity_Oformlenie : AppCompatActivity() {
     var connect: Connection? = null
@@ -37,6 +38,14 @@ class MainActivity_Oformlenie : AppCompatActivity() {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
+        // Шаг 1: Генерация русской буквы
+        val russianLetters = ('А'..'Я').toList() // Список русских букв от А до Я
+        val randomLetter = russianLetters[Random.nextInt(russianLetters.size)]
+        // Шаг 2: Генерация трех цифр
+        val randomDigits = List(3) { Random.nextInt(0, 10) }.joinToString("")
+        // Шаг 3: Объединение буквы и цифр
+        val orderId = "$randomLetter$randomDigits" //id заказа
+
 
         // Загружаем данные из SharedPreferences
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
@@ -44,32 +53,32 @@ class MainActivity_Oformlenie : AppCompatActivity() {
 
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
-                data.add(InOformlenie(value.toString()))
                 items.add(InOformlenie(value.toString()))
             }
         }
+        val selectedDishNames = items.map { it.text }
+        val selectedDishesString = selectedDishNames.joinToString(", ")
+
 
         save_button = findViewById(R.id.saveButton3)
         save_button.setOnClickListener {
-            Toast.makeText(this, "Данные сохраняются...", Toast.LENGTH_SHORT).show()
-            Log.d("Cat", items.toString())
+            Toast.makeText(this, "Заказ оформляется...", Toast.LENGTH_SHORT).show()
+            save_button.isEnabled = false
             try {
-                val selectedItems = data
-                if (selectedItems.isEmpty()) {
-                    Toast.makeText(this@MainActivity_Oformlenie, "Выберите блюда!", Toast.LENGTH_SHORT).show()
-                }
+               // val selectedItems = data
                 val connectionHelper = ConnectionHelper()
                 connect = connectionHelper.connectionclass()
                 connect?.use { conn ->
                     // Внесение новых данных
-                    val query = "INSERT INTO Заказы (dishes) VALUES (?)"
+                    val query = "INSERT INTO Заказы (order_id, dishes) VALUES (?,?)"
                     conn.prepareStatement(query).use { ps ->
-                        ps.setString(1, selectedItems.toString())
+                        ps.setString(1, orderId)
+                        ps.setString(2, selectedDishesString)
                         ps.addBatch() // Добавляем в пакет
                         ps.executeBatch() // Выполняем все запросы разом
                     }
                 }
-                Toast.makeText(this@MainActivity_Oformlenie, "Данные сохранены!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity_Oformlenie, "Заказ оформлен!", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Log.e("DB_SAVE_ERROR", e.toString())
                 Toast.makeText(this@MainActivity_Oformlenie, "Ошибка сохранения: ${e.message}", Toast.LENGTH_LONG).show()

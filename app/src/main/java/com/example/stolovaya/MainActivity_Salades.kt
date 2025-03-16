@@ -9,6 +9,7 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +20,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.sql.Connection
@@ -28,26 +33,27 @@ import java.sql.Statement
 class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListener {
     var connect: Connection? = null
     var connectionResult: String = ""
-    private lateinit var button_korzina: Button //кнопка перехода в корзину
+    private lateinit var button_korzina: Button // Кнопка перехода в корзину
+    private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main_salades)
 
-        //Цвет для строки состояния
+        // Цвет для строки состояния
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
-        //Цвет для нижней строки с кнопками домой
+        // Цвет для нижней строки с кнопками домой
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
         button_korzina = findViewById(R.id.button7)
 
-        button_korzina.setOnClickListener {//Переход в корзину
+        button_korzina.setOnClickListener { // Переход в корзину
             val intent = Intent(this@MainActivity_Salades, MainActivity_Korzina::class.java)
             startActivity(intent)
         }
@@ -56,41 +62,63 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
         recyclerview.layoutManager = GridLayoutManager(this, 2)
         val data = ArrayList<ItemsViewModel>()
 
-        val adapter = CustomAdapter(data, this)//Передаём информацию data при помощи интерфейса listener
+        val adapter = CustomAdapter(data, this) // Передаём информацию data при помощи интерфейса listener
         recyclerview.adapter = adapter
 
-        try {
-            val connectionHelper = ConnectionHelper();
-            connect = connectionHelper.connectionclass()
-            if (connect != null) {
-                var query: String = "SELECT name_dish, photo_dish  FROM Блюда where photo_dish is not null"
 
-                var st: Statement = connect!!.createStatement()
-                var rs: ResultSet = st.executeQuery(query);
 
-                val tempList = mutableListOf<Pair<Bitmap?, String>>()
-                while (rs.next()) {
+        progressBar = findViewById(R.id.progressBar)
 
-                    val name = rs.getString("name_dish")
-                    val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
-                    val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                    tempList.add(Pair(bitmap, name))
+
+
+        // Запуск корутины для выполнения запроса к базе данных
+        CoroutineScope(Dispatchers.IO).launch {
+            progressBar.visibility = View.VISIBLE
+            recyclerview.visibility = View.GONE
+            try {
+                val connectionHelper = ConnectionHelper()
+                connect = connectionHelper.connectionclass()
+
+                if (connect != null) {
+                    val query: String = "SELECT name_dish, photo_dish FROM Блюда where id_type_dish = 3"
+                    val st: Statement = connect!!.createStatement()
+                    val rs: ResultSet = st.executeQuery(query)
+
+                    val tempList = mutableListOf<Pair<Bitmap?, String>>()
+                    while (rs.next()) {
+                        val name = rs.getString("name_dish")
+                        val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
+                        val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                        tempList.add(Pair(bitmap, name))
+                    }
+
+                    // Обновление UI в основном потоке
+                    withContext(Dispatchers.Main) {
+                        for (i in 0 until tempList.size) {
+                            val item1 = tempList[i]
+                            val groupedItem = ItemsViewModel(
+                                item1.first, // image (Bitmap?)
+                                item1.second  // text (String)
+                            )
+                            data.add(groupedItem)
+                        }
+                        adapter.notifyDataSetChanged() // Уведомляем адаптер об изменении данных
+                    }
+                    progressBar.visibility = View.GONE
+                    recyclerview.visibility = View.VISIBLE
+
+                } else {
+                    withContext(Dispatchers.Main) {
+                        connectionResult = "Check Connection"
+                        Toast.makeText(this@MainActivity_Salades, connectionResult, Toast.LENGTH_SHORT).show()
+                    }
                 }
-                for (i in 0 until tempList.size step 1) {
-                    val item1 = tempList[i]
-
-                    val groupedItem = ItemsViewModel(
-                        item1.first, // image (Bitmap?)
-                        item1.second  // text (String)
-                    )
-                    data.add(groupedItem)
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                    connectionResult = "Error: ${ex.message}"
+                    Toast.makeText(this@MainActivity_Salades, connectionResult, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                connectionResult = "Check Connection";
             }
-        }
-        catch (ex: Exception) {
-
         }
     }
 
@@ -112,6 +140,5 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
         editor.putString("${uniqueKey}_name", item.text) // Название блюда
         editor.putString("${uniqueKey}_image", imageBase64) // Изображение в Base64
         editor.apply()
-
     }
 }
