@@ -107,7 +107,6 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
                 val selectedItems = items.filter { it.isSelected }
                 if (selectedItems.isEmpty()) {
                     Toast.makeText(this@MainActivity_MenuPersonala, "Выберите блюда!", Toast.LENGTH_SHORT).show()
-
                 }
                 val connectionHelper = ConnectionHelper()
                 connect = connectionHelper.connectionclass()

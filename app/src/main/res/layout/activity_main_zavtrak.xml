@@ -13,7 +13,7 @@
       android:layout_height="54dp"
       android:layout_x="201dp"
       android:layout_y="77dp"
-      android:background="@drawable/button_background"
+      android:background="@drawable/ripple_effect_btn_korzina"
       android:fontFamily="@font/montserrat_medium"
       android:text="@string/korzina"
       android:textAlignment="textStart"

@@ -18,11 +18,11 @@ public class ConnectionHelper {
 //        pass = "user123456";
 //        port = "1433"; андрюх мое закомментируй потом, а то я устал уже постоянно менять
 
-//        ip = "192.168.0.102";
-//        database = "proekt3";
-//        uname = "ya_user";
-//        pass = "aboba123";
-//        port = "1433"; андрюх, это тоже не трогай
+     /*   ip = "192.168.0.102";
+        database = "proekt3";
+        uname = "ya_user";
+        pass = "aboba123";
+        port = "1433"; //андрюх, это тоже не трогай*/
 
 //        ip = "192.168.0.32";
 //        database = "столовая";
