@@ -133,5 +133,5 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
             }
         }
     }
-        }
+}
 

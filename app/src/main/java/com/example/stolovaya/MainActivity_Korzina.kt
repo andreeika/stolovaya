@@ -20,6 +20,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
     private val data = ArrayList<ItemsViewModel>()
     private lateinit var btnClear: Button
     private lateinit var logoBack: ImageView
+    private lateinit var save_button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,14 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         logoBack = findViewById(R.id.logoBackKorzina) //возврат на главную при нажатии на лого
         logoBack.setOnClickListener {
             val intent = Intent(this@MainActivity_Korzina, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        save_button = findViewById(R.id.saveButton2)
+
+        save_button.setOnClickListener {
+            val intent =
+                Intent(this@MainActivity_Korzina, MainActivity_Oformlenie::class.java)
             startActivity(intent)
         }
 

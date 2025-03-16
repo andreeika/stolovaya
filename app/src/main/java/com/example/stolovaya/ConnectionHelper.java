@@ -24,11 +24,11 @@ public class ConnectionHelper {
         pass = "aboba123";
         port = "1433"; //андрюх, это тоже не трогай*/
 
-//        ip = "192.168.0.32";
-//        database = "столовая";
-//        uname = "youruser";
-//        pass = "password";
-//        port = "52446";
+        ip = "192.168.0.32";
+        database = "столовая";
+        uname = "youruser";
+        pass = "password";
+        port = "52446";
 
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

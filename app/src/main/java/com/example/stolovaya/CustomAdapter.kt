@@ -9,6 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+data class InOformlenie(val text: String)
+class Oformlenie(private val data: ArrayList<InOformlenie>){
+
+}
 data class ItemsViewModel(val image: Bitmap?, val text: String)
 class CustomAdapter(private val mList: List<ItemsViewModel>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
@@ -44,6 +48,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
 
         }
         holder.imageView.setImageBitmap(ItemsViewModel.image)
+
     }
 
 
