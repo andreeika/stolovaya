@@ -7,6 +7,22 @@
     android:background="#64B5F6"
     tools:context=".MainActivity_Soup">
 
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="179dp"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:textAlignment="center"
+        android:textColor="#FFFEFE"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <Button
         android:id="@+id/saveButton2"
         android:layout_width="240dp"

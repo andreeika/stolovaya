@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
     private lateinit var btnClear: Button
     private lateinit var logoBack: ImageView
     private lateinit var save_button: Button
+    private lateinit var text_price: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +35,11 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val adapter = CustomAdapter(data, this)//с помощью адаптера принимаем информацию
         recyclerview.adapter = adapter
 
+        text_price = findViewById(R.id.textView19)
         // Загружаем данные из SharedPreferences
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val allEntries = sharedPreferences.all
-
+        var totalPrice = 0
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
                 val imageKey = key.replace("_name", "_image")
@@ -45,13 +48,23 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
                     // Преобразуем Base64 обратно в Bitmap
                     val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
+                    val priceKey = key.replace("_name", "_priceWithRub")
+                    val priceValue = sharedPreferences.getString(priceKey, null)
                     // Создаем объект ItemsViewModel
-                    val newItem = ItemsViewModel(bitmap, value.toString(), value.toString())
+                    val newItem = ItemsViewModel(bitmap, value.toString(), priceValue.toString())
                     data.add(newItem)
+                    val numberRegex = Regex("(\\d+)")
+                    val numberMatch = numberRegex.find(priceKey)
+                    val price = numberMatch?.value?.toIntOrNull()
+                    if (price != null) {
+                        totalPrice += price
+                    }
                 }
+
             }
         }
+
+
 
         //Цвет для нижней строки с кнопками домой
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

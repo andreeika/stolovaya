@@ -55,7 +55,7 @@ class MainActivity_Oformlenie : AppCompatActivity() {
             if (key.endsWith("_name")) {
                 items.add(InOformlenie(value.toString()))
             }
-            if (key.endsWith("_price")) {
+            if (key.endsWith("_priceWithRub")) {
                 items.add(InOformlenie(value.toString()))
             }
         }

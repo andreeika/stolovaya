@@ -135,12 +135,12 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
         item.image?.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val imageBytes = stream.toByteArray()
         val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-
         // Генерируем уникальный ключ для каждого элемента
         val uniqueKey = "item_${System.currentTimeMillis()}"
 
         // Сохраняем данные
         editor.putString("${uniqueKey}_name", item.text) // Название блюда
+        editor.putString("${uniqueKey}_priceWithRub", item.priceWithRub) // Название блюда
         editor.putString("${uniqueKey}_image", imageBase64) // Изображение в Base64
         editor.apply()
     }
