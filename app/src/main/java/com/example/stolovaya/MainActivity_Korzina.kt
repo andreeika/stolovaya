@@ -47,7 +47,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
                     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
                     // Создаем объект ItemsViewModel
-                    val newItem = ItemsViewModel(bitmap, value.toString())
+                    val newItem = ItemsViewModel(bitmap, value.toString(), value.toString())
                     data.add(newItem)
                 }
             }

@@ -80,16 +80,18 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
                 connect = connectionHelper.connectionclass()
 
                 if (connect != null) {
-                    val query: String = "SELECT name_dish, photo_dish FROM Блюда where id_type_dish = 3"
+                    val query: String = "SELECT name_dish, photo_dish, price_dish FROM Блюда where id_type_dish = 3"
                     val st: Statement = connect!!.createStatement()
                     val rs: ResultSet = st.executeQuery(query)
 
-                    val tempList = mutableListOf<Pair<Bitmap?, String>>()
+                    val tempList = mutableListOf<Triple<Bitmap?, String, String>>()
                     while (rs.next()) {
                         val name = rs.getString("name_dish")
+                        val price = rs.getInt("price_dish")
+                        val priceWithRub = "$price руб"
                         val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
                         val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                        tempList.add(Pair(bitmap, name))
+                        tempList.add(Triple(bitmap, name, priceWithRub))
                     }
 
                     // Обновление UI в основном потоке
@@ -98,7 +100,8 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
                             val item1 = tempList[i]
                             val groupedItem = ItemsViewModel(
                                 item1.first, // image (Bitmap?)
-                                item1.second  // text (String)
+                                item1.second,
+                                item1.third// text (String)
                             )
                             data.add(groupedItem)
                         }
@@ -142,3 +145,6 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
         editor.apply()
     }
 }
+
+
+

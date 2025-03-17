@@ -98,6 +98,28 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
+        android:id="@+id/textView14"
+        android:layout_width="124dp"
+        android:layout_height="33dp"
+        android:layout_x="21dp"
+        android:layout_y="283dp"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:cursorVisible="true"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center_vertical|left"
+        android:textAlignment="textStart"
+        android:textColor="#FFFDFD"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
         android:id="@+id/textView13"
         android:layout_width="282dp"
         android:layout_height="32dp"

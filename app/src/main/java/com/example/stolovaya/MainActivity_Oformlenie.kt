@@ -19,7 +19,7 @@ class MainActivity_Oformlenie : AppCompatActivity() {
     var connectionResult: String = ""
     private val data = ArrayList<InOformlenie>()
     private lateinit var save_button: Button
-    private lateinit var text: TextView
+    private lateinit var text_price: TextView
     private val items = mutableListOf<InOformlenie>()
 
 
@@ -53,6 +53,9 @@ class MainActivity_Oformlenie : AppCompatActivity() {
 
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
+                items.add(InOformlenie(value.toString()))
+            }
+            if (key.endsWith("_price")) {
                 items.add(InOformlenie(value.toString()))
             }
         }
