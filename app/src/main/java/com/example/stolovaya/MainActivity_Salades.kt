@@ -80,7 +80,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
                 connect = connectionHelper.connectionclass()
 
                 if (connect != null) {
-                    val query: String = "SELECT name_dish, photo_dish, price_dish FROM Блюда where id_type_dish = 2"
+                    val query: String = "SELECT name_dish, photo_dish, price_dish FROM Блюда where id_type_dish = 4"
                     val st: Statement = connect!!.createStatement()
                     val rs: ResultSet = st.executeQuery(query)
 
@@ -140,7 +140,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
 
         // Сохраняем данные
         editor.putString("${uniqueKey}_name", item.text) // Название блюда
-        editor.putString("${uniqueKey}_priceWithRub", item.priceWithRub) // Цена блюда
+        editor.putString("${uniqueKey}_priceWithRub", item.priceWithRub) // Название блюда
         editor.putString("${uniqueKey}_image", imageBase64) // Изображение в Base64
         editor.apply()
     }

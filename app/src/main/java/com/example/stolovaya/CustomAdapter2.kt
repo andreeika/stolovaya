@@ -51,5 +51,4 @@ class CustomAdapter2(private val mList: List<ItemsViewModel_spisok>,  private va
         val idview: TextView = itemView.findViewById(R.id.textView12)
     }
 
-
 }

@@ -16,8 +16,8 @@ class MainActivity_Login : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
 
-    private val correctUsername = "user"
-    private val correctPassword = "password"
+    private val correctUsername = "123"
+    private val correctPassword = "123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

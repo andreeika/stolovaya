@@ -60,6 +60,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
             val index = items.indexOf(ItemsViewModel_spisok)
             if (index != -1) { // Проверяем, что элемент найден
                 items[index] = ItemsViewModel_spisok
+                items[index].isSelected = true
             } else {
                 // Обработка случая, когда элемент не найден
                 println("Элемент не найден в списке: $ItemsViewModel_spisok")
@@ -71,7 +72,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String = "SELECT id_dish, name_dish FROM Блюда where id_dish < 6"
+                var query: String = "SELECT id_dish, name_dish FROM Блюда where id_dish<25"
 
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);
@@ -87,7 +88,8 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
 
                     val groupedItem = ItemsViewModel_spisok(
                         item1.first,
-                        item1.second
+                        item1.second,
+                        false
                     )
                     data.add(groupedItem)
                     items.add(groupedItem)
@@ -127,6 +129,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
                     }
                 }
                 Toast.makeText(this@MainActivity_MenuPersonala, "Данные сохранены!", Toast.LENGTH_SHORT).show()
+                items.clear() // с этим оно работает без бага (надо ли что-то делать со списком data?)
             } catch (e: Exception) {
                 Log.e("DB_SAVE_ERROR", e.toString())
                 Toast.makeText(this@MainActivity_MenuPersonala, "Ошибка сохранения: ${e.message}", Toast.LENGTH_LONG).show()
