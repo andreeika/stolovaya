@@ -51,12 +51,24 @@ class MainActivity_Oformlenie : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val allEntries = sharedPreferences.all
 
+        var totalPrice = 0
+        text_price = findViewById(R.id.textView14)
+
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
                 items.add(InOformlenie(value.toString()))
             }
             if (key.endsWith("_priceWithRub")) {
                 items.add(InOformlenie(value.toString()))
+                val priceKey = key.replace("_name", "_priceWithRub")
+                val priceValue = sharedPreferences.getString(priceKey, null)
+                val numberRegex = Regex("(\\d+)")
+                val numberMatch = numberRegex.find(priceValue!!)
+                val price = numberMatch?.value?.toIntOrNull()
+                if (price != null) {
+                    totalPrice += price
+                }
+                text_price.setText(totalPrice.toString() + " руб")
             }
         }
         val selectedDishNames = items.map { it.text }

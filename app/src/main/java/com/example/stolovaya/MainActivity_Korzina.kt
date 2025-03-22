@@ -16,8 +16,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.sql.Connection
 
 class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListener {
+    var connect: Connection? = null
+    var connectionResult: String = ""
     private val data = ArrayList<ItemsViewModel>()
     private lateinit var btnClear: Button
     private lateinit var logoBack: ImageView
@@ -54,13 +57,13 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
                     val newItem = ItemsViewModel(bitmap, value.toString(), priceValue.toString())
                     data.add(newItem)
                     val numberRegex = Regex("(\\d+)")
-                    val numberMatch = numberRegex.find(priceKey)
+                    val numberMatch = numberRegex.find(priceValue!!)
                     val price = numberMatch?.value?.toIntOrNull()
                     if (price != null) {
                         totalPrice += price
                     }
+                    text_price.setText(totalPrice.toString() + " руб")
                 }
-
             }
         }
 
@@ -79,6 +82,8 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
 
             data.clear()
             adapter.notifyDataSetChanged()
+
+            text_price.setText("0 руб")
         }
 
         logoBack = findViewById(R.id.logoBackKorzina) //возврат на главную при нажатии на лого
