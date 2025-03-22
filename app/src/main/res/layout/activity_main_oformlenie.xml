@@ -10,6 +10,29 @@
 
 
     <TextView
+        android:id="@+id/textView22"
+        android:layout_width="60dp"
+        android:layout_height="32dp"
+        android:layout_x="21dp"
+        android:layout_y="283dp"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:cursorVisible="true"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="left|center_vertical"
+        android:text="..."
+        android:textAlignment="center"
+        android:textColor="#FFFDFD"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
         android:id="@+id/textView17"
         android:layout_width="300dp"
         android:layout_height="32dp"
@@ -53,7 +76,7 @@
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="250dp"
+        android:layout_width="230dp"
         android:layout_height="32dp"
         android:layout_x="21dp"
         android:layout_y="283dp"
@@ -100,7 +123,7 @@
     <TextView
         android:id="@+id/textView14"
         android:layout_width="124dp"
-        android:layout_height="33dp"
+        android:layout_height="32dp"
         android:layout_x="21dp"
         android:layout_y="283dp"
         android:clickable="true"
@@ -113,7 +136,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.32"

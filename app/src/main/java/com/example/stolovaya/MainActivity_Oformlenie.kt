@@ -1,11 +1,15 @@
 package com.example.stolovaya
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +24,7 @@ class MainActivity_Oformlenie : AppCompatActivity() {
     private val data = ArrayList<InOformlenie>()
     private lateinit var save_button: Button
     private lateinit var text_price: TextView
+    private lateinit var table: TextView
     private val items = mutableListOf<InOformlenie>()
 
 
@@ -104,5 +109,44 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 Toast.makeText(this@MainActivity_Oformlenie, "Ошибка сохранения: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
+
+        table = findViewById(R.id.textView22)
+        table.setOnClickListener{ view ->
+            showPopupMenu(view)
+        }
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.tables_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.menu_item_1 -> {
+                    table.setText("1")
+                    true // Обработано
+                }
+                R.id.menu_item_2 -> {
+                    table.setText("2")
+                    true // Обработано
+                }
+                R.id.menu_item_3 -> {
+                    table.setText("3")
+                    true // Обработано
+                }
+                R.id.menu_item_4 -> {
+                    table.setText("4")
+                    true // Обработано
+                }
+                R.id.menu_item_5 -> {
+                    table.setText("5")
+                    true // Обработано
+                }
+
+                else -> false // Не обработано
+            }
+        }
+
+        popupMenu.show()
     }
 }
