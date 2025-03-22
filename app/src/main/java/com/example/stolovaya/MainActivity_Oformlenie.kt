@@ -58,8 +58,12 @@ class MainActivity_Oformlenie : AppCompatActivity() {
             if (key.endsWith("_name")) {
                 items.add(InOformlenie(value.toString()))
             }
+//            if (key.endsWith("_priceWithRub")) {
+//                items.add(InOformlenie(value.toString()))
+//            }
+        }
+        for ((key, value) in allEntries){
             if (key.endsWith("_priceWithRub")) {
-                items.add(InOformlenie(value.toString()))
                 val priceKey = key.replace("_name", "_priceWithRub")
                 val priceValue = sharedPreferences.getString(priceKey, null)
                 val numberRegex = Regex("(\\d+)")
@@ -71,6 +75,7 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 text_price.setText(totalPrice.toString() + " руб")
             }
         }
+
         val selectedDishNames = items.map { it.text }
         val selectedDishesString = selectedDishNames.joinToString(", ")
 
@@ -85,7 +90,7 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 connect = connectionHelper.connectionclass()
                 connect?.use { conn ->
                     // Внесение новых данных
-                    val query = "INSERT INTO Заказы (order_id, dishes) VALUES (?,?)"
+                    val query = "INSERT INTO Заказы (order_id, dishes, status) VALUES (?,?, 'Не выполнен')"
                     conn.prepareStatement(query).use { ps ->
                         ps.setString(1, orderId)
                         ps.setString(2, selectedDishesString)
