@@ -26,7 +26,8 @@ class MainActivity_Oformlenie : AppCompatActivity() {
     private lateinit var text_price: TextView
     private lateinit var table: TextView
     private val items = mutableListOf<InOformlenie>()
-
+    var selectedTable: String? = null
+    var priceInBd: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +77,10 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 val price = numberMatch?.value?.toIntOrNull()
                 if (price != null) {
                     totalPrice += price
+
                 }
                 text_price.setText(totalPrice.toString() + " руб")
+                priceInBd = totalPrice.toString()
             }
         }
 
@@ -95,10 +98,12 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 connect = connectionHelper.connectionclass()
                 connect?.use { conn ->
                     // Внесение новых данных
-                    val query = "INSERT INTO Заказы (order_id, dishes, status) VALUES (?,?, 'Не выполнен')"
+                    val query = "INSERT INTO Заказы (order_id, dishes, status, table_num, sum) VALUES (?,?, 'Не выполнен', ?,?)"
                     conn.prepareStatement(query).use { ps ->
                         ps.setString(1, orderId)
                         ps.setString(2, selectedDishesString)
+                        ps.setString(3, selectedTable)
+                        ps.setString(4, priceInBd)
                         ps.addBatch() // Добавляем в пакет
                         ps.executeBatch() // Выполняем все запросы разом
                     }
@@ -123,22 +128,27 @@ class MainActivity_Oformlenie : AppCompatActivity() {
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.menu_item_1 -> {
+                    selectedTable = "1"
                     table.setText("1")
                     true // Обработано
                 }
                 R.id.menu_item_2 -> {
+                    selectedTable = "2"
                     table.setText("2")
                     true // Обработано
                 }
                 R.id.menu_item_3 -> {
+                    selectedTable = "3"
                     table.setText("3")
                     true // Обработано
                 }
                 R.id.menu_item_4 -> {
+                    selectedTable = "4"
                     table.setText("4")
                     true // Обработано
                 }
                 R.id.menu_item_5 -> {
+                    selectedTable = "5"
                     table.setText("5")
                     true // Обработано
                 }
