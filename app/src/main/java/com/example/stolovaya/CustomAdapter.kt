@@ -13,7 +13,8 @@ data class InOformlenie(val text: String)
 class Oformlenie(private val data: ArrayList<InOformlenie>){
 
 }
-data class ItemsViewModel(val image: Bitmap?, val text: String, val priceWithRub: String)
+data class ItemsViewModel(val image: Bitmap?, val text: String, val priceWithRub: String, var quantity: Int = 1)
+
 class CustomAdapter(private val mList: List<ItemsViewModel>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     // Интерфейс для обработки нажатий на кнопку
@@ -49,7 +50,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
 
         }
         holder.imageView.setImageBitmap(ItemsViewModel.image)
-
+        holder.quantity.text = ItemsViewModel.quantity.toString()
     }
 
 
@@ -63,6 +64,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textView_price: TextView = itemView.findViewById(R.id.textView18)
         val btn: Button = itemView.findViewById(R.id.buttonAdd)
+        val quantity: TextView = itemView.findViewById(R.id.quantity)
     }
 
 

@@ -63,7 +63,7 @@
         app:srcCompat="@drawable/sibsiu_logo_main" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/logoBack"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_x="21dp"

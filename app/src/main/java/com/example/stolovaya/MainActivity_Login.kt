@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ class MainActivity_Login : AppCompatActivity() {
     private lateinit var editTextUsername: EditText
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
+    private lateinit var logoBack: ImageView
 
     private val correctUsername = "123"
     private val correctPassword = "123"
@@ -34,9 +36,8 @@ class MainActivity_Login : AppCompatActivity() {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
-        lateinit var logo: ImageView
-        logo = findViewById(R.id.imageView22)
-        logo.setOnClickListener{
+        logoBack = findViewById(R.id.logoBack)
+        logoBack.setOnClickListener{
             val intent = Intent(this@MainActivity_Login, MainActivity::class.java)
             startActivity(intent)
         }
@@ -62,7 +63,6 @@ class MainActivity_Login : AppCompatActivity() {
                 // Авторизация не удалась
                 Toast.makeText(this, "Неверный логин или пароль!", Toast.LENGTH_SHORT).show()
             }
-
-
+        }
     }
-}}
+}

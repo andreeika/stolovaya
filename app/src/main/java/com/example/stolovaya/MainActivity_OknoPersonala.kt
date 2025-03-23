@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,8 @@ class MainActivity_OknoPersonala : AppCompatActivity() {
     private lateinit var button_save: Button
     private val items = mutableListOf<ItemsViewModel_OknoPersonala>()
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
+    private lateinit var logoBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,12 @@ class MainActivity_OknoPersonala : AppCompatActivity() {
         //Цвет для нижней строки с кнопками домой
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
+        }
+
+        logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
+        logoBack.setOnClickListener {
+            val intent = Intent(this@MainActivity_OknoPersonala, MainActivity::class.java)
+            startActivity(intent)
         }
 
         button_menu = findViewById(R.id.button11) //переход в создание меню

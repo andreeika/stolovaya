@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
     private lateinit var saveButton: Button
     private val items = mutableListOf<ItemsViewModel_spisok>()
     private lateinit var recyclerView: RecyclerView
+    private lateinit var logoBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,12 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
             startActivity(intent)
         }
 
+        logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
+        logoBack.setOnClickListener {
+            val intent = Intent(this@MainActivity_MenuPersonala, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview2)
         recyclerview.layoutManager = GridLayoutManager(this, 1)
         val data = ArrayList<ItemsViewModel_spisok>()
@@ -72,7 +81,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
             val connectionHelper = ConnectionHelper();
             connect = connectionHelper.connectionclass()
             if (connect != null) {
-                var query: String = "SELECT id_dish, name_dish FROM Блюда where id_dish<25"
+                var query: String = "SELECT id_dish, name_dish FROM Блюда"
 
                 var st: Statement = connect!!.createStatement()
                 var rs: ResultSet = st.executeQuery(query);

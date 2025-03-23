@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.078" />
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/logoBack"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_x="21dp"
@@ -55,11 +55,10 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="179dp"
+        android:layout_width="300dp"
         android:layout_height="60dp"
-        android:clickable="true"
         android:text="Салаты"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="#FFFEFE"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,12 +1,14 @@
 package com.example.stolovaya
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.ByteArrayOutputStream
 import java.sql.Connection
 
 class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListener {
@@ -23,9 +26,12 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
     var connectionResult: String = ""
     private val data = ArrayList<ItemsViewModel>()
     private lateinit var btnClear: Button
+    private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
     private lateinit var logoBack: ImageView
     private lateinit var save_button: Button
     private lateinit var text_price: TextView
+    private lateinit var adapter: CustomAdapter
+    var totalPrice: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +41,13 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val recyclerview = findViewById<RecyclerView>(R.id.rvKorzina)
         recyclerview.layoutManager = GridLayoutManager(this, 2)
 
-        val adapter = CustomAdapter(data, this)//с помощью адаптера принимаем информацию
+        adapter = CustomAdapter(data, this)//с помощью адаптера принимаем информацию
         recyclerview.adapter = adapter
 
         text_price = findViewById(R.id.textView19)
         // Загружаем данные из SharedPreferences
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val allEntries = sharedPreferences.all
-        var totalPrice = 0
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
                 val imageKey = key.replace("_name", "_image")
@@ -86,7 +91,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
             text_price.setText("0 руб")
         }
 
-        logoBack = findViewById(R.id.logoBackKorzina) //возврат на главную при нажатии на лого
+        logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
         logoBack.setOnClickListener {
             val intent = Intent(this@MainActivity_Korzina, MainActivity::class.java)
             startActivity(intent)
@@ -103,7 +108,29 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
     }
 
     override fun onKorzinaClick(item: ItemsViewModel) {
-        TODO("Not yet implemented")
+        val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // Преобразуем Bitmap в Base64
+        val stream = ByteArrayOutputStream()
+        item.image?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val imageBytes = stream.toByteArray()
+        val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+        // Генерируем уникальный ключ для каждого элемента
+        val uniqueKey = "item_${System.currentTimeMillis()}"
+
+        // Сохраняем данные
+        editor.remove("${uniqueKey}_name") // Название блюда
+        editor.remove("${uniqueKey}_priceWithRub") // Название блюда
+        editor.remove("${uniqueKey}_image") // Изображение в Base64
+        editor.apply()
+        val numberRegex = Regex("(\\d+)")
+        val numberMatch = numberRegex.find(item.priceWithRub)
+        val price = numberMatch?.value?.toIntOrNull()
+        totalPrice -= price!!
+        text_price.setText(totalPrice.toString() + " руб")
+        data.remove(item)
+        adapter.notifyDataSetChanged()
     }
 
 }

@@ -9,22 +9,18 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.sql.Connection
 import java.sql.ResultSet
@@ -35,6 +31,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
     var connectionResult: String = ""
     private lateinit var button_korzina: Button // Кнопка перехода в корзину
     private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
+    private lateinit var logoBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +48,12 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
         }
 
+        logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
+        logoBack.setOnClickListener {
+            val intent = Intent(this@MainActivity_Salades, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         button_korzina = findViewById(R.id.button7)
 
         button_korzina.setOnClickListener { // Переход в корзину
@@ -65,11 +68,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val adapter = CustomAdapter(data, this) // Передаём информацию data при помощи интерфейса listener
         recyclerview.adapter = adapter
 
-
-
         progressBar = findViewById(R.id.progressBar)
-
-
 
         // Запуск корутины для выполнения запроса к базе данных
         CoroutineScope(Dispatchers.IO).launch {
@@ -80,7 +79,7 @@ class MainActivity_Salades : AppCompatActivity(), CustomAdapter.OnItemClickListe
                 connect = connectionHelper.connectionclass()
 
                 if (connect != null) {
-                    val query: String = "SELECT name_dish, photo_dish, price_dish FROM Блюда where id_type_dish = 4"
+                    val query: String = "exec categoriesDivision 3"
                     val st: Statement = connect!!.createStatement()
                     val rs: ResultSet = st.executeQuery(query)
 

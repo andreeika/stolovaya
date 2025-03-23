@@ -9,7 +9,9 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +30,8 @@ class MainActivity_Oformlenie : AppCompatActivity() {
     private val items = mutableListOf<InOformlenie>()
     var selectedTable: String? = null
     var priceInBd: String? = null
+    private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
+    private lateinit var logoBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,12 @@ class MainActivity_Oformlenie : AppCompatActivity() {
         //Цвет для нижней строки с кнопками домой
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
+        }
+
+        logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
+        logoBack.setOnClickListener {
+            val intent = Intent(this@MainActivity_Oformlenie, MainActivity::class.java)
+            startActivity(intent)
         }
 
         // Шаг 1: Генерация русской буквы

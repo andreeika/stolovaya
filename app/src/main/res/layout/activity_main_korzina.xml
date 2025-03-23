@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.078" />
 
     <ImageView
-        android:id="@+id/logoBackKorzina"
+        android:id="@+id/logoBack"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_x="21dp"
