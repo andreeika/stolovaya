@@ -38,6 +38,9 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
     private lateinit var logoBack: ImageView
     var totalPrice: Int = 0
 
+    private lateinit var data: ArrayList<ItemsViewModel>
+    private lateinit var adapter: CustomAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -67,9 +70,10 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
 
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
         recyclerview.layoutManager = GridLayoutManager(this, 2)
-        val data = ArrayList<ItemsViewModel>()
+        data = ArrayList<ItemsViewModel>()
 
-        val adapter = CustomAdapter(data, this) // Передаём информацию data при помощи интерфейса listener
+        adapter =
+            CustomAdapter(data, this) // Передаём информацию data при помощи интерфейса listener
         recyclerview.adapter = adapter
 
         progressBar = findViewById(R.id.progressBar)
@@ -87,14 +91,31 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
                     val st: Statement = connect!!.createStatement()
                     val rs: ResultSet = st.executeQuery(query)
 
-                    val tempList = mutableListOf<Triple<Bitmap?, String, String>>()
+                    val tempList = mutableListOf<ItemsViewModel>()
                     while (rs.next()) {
                         val name = rs.getString("name_dish")
                         val price = rs.getInt("price_dish")
                         val priceWithRub = "$price руб"
-                        val imageBytes: ByteArray = rs.getBytes("photo_dish") // Двоичные данные картинки
-                        val bitmap: Bitmap? = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                        tempList.add(Triple(bitmap, name, priceWithRub))
+                        val imageBytes: ByteArray =
+                            rs.getBytes("photo_dish") // Двоичные данные картинки
+                        val bitmap: Bitmap? =
+                            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+                        // Проверяем, есть ли уже такое блюдо в корзине
+                        val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
+                        val existingKey = findExistingItemKey(sharedPreferences, name)
+                        val quantity = if (existingKey != null) {
+                            // Если блюдо уже есть, увеличиваем его количество
+                            val quantityKey = "${existingKey}_quantity"
+                            val currentQuantity = sharedPreferences.getInt(quantityKey, 1)
+                            currentQuantity + 1
+                        } else {
+                            // Если блюда нет, устанавливаем начальное количество 1
+                            1
+                        }
+
+                        tempList.add(ItemsViewModel(bitmap, name, priceWithRub, quantity))
+                        Log.d("Cat", tempList.toString())
                     }
 
                     // Обновление UI в основном потоке
@@ -102,9 +123,10 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
                         for (i in 0 until tempList.size) {
                             val item1 = tempList[i]
                             val groupedItem = ItemsViewModel(
-                                item1.first, // image (Bitmap?)
-                                item1.second,
-                                item1.third// text (String)
+                                item1.image, // image (Bitmap?)
+                                item1.text,
+                                item1.priceWithRub,// text (String)
+                                item1.quantity
                             )
                             data.add(groupedItem)
                         }
@@ -116,13 +138,18 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
                 } else {
                     withContext(Dispatchers.Main) {
                         connectionResult = "Check Connection"
-                        Toast.makeText(this@MainActivity_Garnir, connectionResult, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@MainActivity_Garnir,
+                            connectionResult,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (ex: Exception) {
                 withContext(Dispatchers.Main) {
                     connectionResult = "Error: ${ex.message}"
-                    Toast.makeText(this@MainActivity_Garnir, connectionResult, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity_Garnir, connectionResult, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -134,6 +161,7 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
 
         // Проверяем, есть ли уже такое блюдо в корзине
         val existingKey = findExistingItemKey(sharedPreferences, item.text)
+        val totalPriceForItem: Int
         if (existingKey != null) {
             // Если блюдо уже есть, увеличиваем его количество
             val quantityKey = "${existingKey}_quantity"
@@ -141,7 +169,7 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
             val newQuantity = currentQuantity + 1
             editor.putInt(quantityKey, newQuantity)
 
-            // Получаем цену за единицу блюда
+            // Получаем цену за единицу блюда (pricePerItem)
             val pricePerItemKey = "${existingKey}_pricePerItem"
             val pricePerItemValue = sharedPreferences.getString(pricePerItemKey, null)
             val numberRegex = Regex("(\\d+)")
@@ -149,9 +177,19 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
             val pricePerItem = numberMatch?.value?.toIntOrNull() ?: 0
 
             // Рассчитываем общую стоимость для этого блюда
-            val totalPriceForItem = pricePerItem * newQuantity
-            editor.putString("${existingKey}_priceWithRub", "$totalPriceForItem руб")
+            totalPriceForItem = pricePerItem
+            editor.putString("${existingKey}_pricePerItem", "$totalPriceForItem руб")
 
+            // Обновляем количество в списке данных
+            val index = data.indexOfFirst { it.text == item.text }
+            if (index != -1) {
+                data[index].quantity = newQuantity
+                Log.d(
+                    "Korzina",
+                    "Updated item: ${data[index].text}, New quantity: ${data[index].quantity}"
+                )
+                adapter.notifyItemChanged(index) // Уведомляем адаптер об изменении
+            }
         } else {
             // Если блюда нет, создаем новую запись
             val uniqueKey = "item_${System.currentTimeMillis()}"
@@ -162,18 +200,31 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
             val imageBytes = stream.toByteArray()
             val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
+            // Извлекаем цену за единицу блюда
+            val numberRegex = Regex("(\\d+)")
+            val numberMatch = numberRegex.find(item.priceWithRub)
+            val priceWithRub = numberMatch?.value?.toIntOrNull() ?: 0
+
             // Сохраняем данные
             editor.putString("${uniqueKey}_name", item.text) // Название блюда
-            editor.putString("${uniqueKey}_pricePerItem", item.priceWithRub) // Цена за единицу (неизменная)
-            editor.putString("${uniqueKey}_priceWithRub", item.priceWithRub) // Начальная общая стоимость (цена за единицу * 1)
+            editor.putString(
+                "${uniqueKey}_pricePerItem",
+                "$priceWithRub руб"
+            ) // Цена за единицу (неизменная)
+            editor.putString(
+                "${uniqueKey}_priceWithRub",
+                "$priceWithRub руб"
+            ) // Начальная общая стоимость (цена за единицу * 1)
             editor.putString("${uniqueKey}_image", imageBase64) // Изображение в Base64
             editor.putInt("${uniqueKey}_quantity", 1) // Начальное количество
         }
         editor.apply()
     }
-}
 
-    private fun findExistingItemKey(sharedPreferences: SharedPreferences, itemName: String): String? {
+    private fun findExistingItemKey(
+        sharedPreferences: SharedPreferences,
+        itemName: String
+    ): String? {
         val allEntries = sharedPreferences.all
         for ((key, value) in allEntries) {
             if (key.endsWith("_name") && value == itemName) {
@@ -183,3 +234,4 @@ class MainActivity_Garnir : AppCompatActivity(), CustomAdapter.OnItemClickListen
         }
         return null
     }
+}

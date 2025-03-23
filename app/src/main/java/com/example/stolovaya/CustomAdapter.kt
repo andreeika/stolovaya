@@ -1,6 +1,7 @@
 package com.example.stolovaya
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,6 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
         fun onKorzinaClick(item: ItemsViewModel)
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context)
@@ -36,6 +35,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val ItemsViewModel = mList[position]
+        Log.d("Adapter", "Binding item: ${ItemsViewModel.text}, Quantity: ${ItemsViewModel.quantity}")
         holder.btn.setOnClickListener {
             listener.onKorzinaClick(ItemsViewModel)// при нажатии на кнопку "+" интерфейс переносит информацию
                                                    // о конкретном блюде в корзину
@@ -50,7 +50,10 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
 
         }
         holder.imageView.setImageBitmap(ItemsViewModel.image)
-        holder.quantity.text = ItemsViewModel.quantity.toString()
+        if (holder.itemView.context is MainActivity_Korzina) {
+            holder.quantity.visibility = View.VISIBLE
+            holder.quantity.text = ItemsViewModel.quantity.toString()
+        }
     }
 
 

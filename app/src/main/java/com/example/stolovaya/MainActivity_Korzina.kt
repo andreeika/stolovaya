@@ -1,11 +1,13 @@
 package com.example.stolovaya
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -50,29 +52,36 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val allEntries = sharedPreferences.all
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
-                val imageKey = key.replace("_name", "_image")
+                val itemKey = key.replace("_name", "")
+                val name = value.toString()
+                val imageKey = "${itemKey}_image"
+                val priceKey = "${itemKey}_priceWithRub"
+                val pricePerItemKey = "${itemKey}_pricePerItem"
+                val quantityKey = "${itemKey}_quantity"
+
                 val imageBase64 = sharedPreferences.getString(imageKey, null)
-                if (imageBase64 != null) {
-                    // Преобразуем Base64 обратно в Bitmap
+                val priceWithRub = sharedPreferences.getString(priceKey, null)
+                val pricePerItemValue = sharedPreferences.getString(pricePerItemKey, null)
+                val quantity = sharedPreferences.getInt(quantityKey, 1)
+
+                if (imageBase64 != null && priceWithRub != null && pricePerItemValue != null) {
                     val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                    val priceKey = key.replace("_name", "_priceWithRub")
-                    val priceValue = sharedPreferences.getString(priceKey, null)
-                    // Создаем объект ItemsViewModel
-                    val newItem = ItemsViewModel(bitmap, value.toString(), priceValue.toString())
+
+                    val newItem = ItemsViewModel(bitmap, name, priceWithRub, quantity)
                     data.add(newItem)
+
+                    // Извлекаем цену за единицу блюда
                     val numberRegex = Regex("(\\d+)")
-                    val numberMatch = numberRegex.find(priceValue!!)
-                    val price = numberMatch?.value?.toIntOrNull()
-                    if (price != null) {
-                        totalPrice += price
-                    }
-                    text_price.setText(totalPrice.toString() + " руб")
+                    val numberMatch = numberRegex.find(pricePerItemValue)
+                    val pricePerItem = numberMatch?.value?.toIntOrNull() ?: 0
+
+                    // Рассчитываем общую стоимость с учётом количества
+                    totalPrice += pricePerItem * quantity
+                    text_price.text = "$totalPrice руб"
                 }
             }
         }
-
-
 
         //Цвет для нижней строки с кнопками домой
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -88,7 +97,9 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
             data.clear()
             adapter.notifyDataSetChanged()
 
+            totalPrice = 0 // Сбрасываем общую стоимость
             text_price.setText("0 руб")
+            Log.d("Cat", totalPrice.toString())
         }
 
         logoBack = findViewById(R.id.logoBack) //возврат на главную при нажатии на лого
@@ -111,26 +122,59 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        // Преобразуем Bitmap в Base64
-        val stream = ByteArrayOutputStream()
-        item.image?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val imageBytes = stream.toByteArray()
-        val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-        // Генерируем уникальный ключ для каждого элемента
-        val uniqueKey = "item_${System.currentTimeMillis()}"
+        // Находим ключ блюда в SharedPreferences
+        val existingKey = findExistingItemKey(sharedPreferences, item.text)
+        if (existingKey != null) {
+            // Получаем текущее количество блюда
+            val quantityKey = "${existingKey}_quantity"
+            val currentQuantity = sharedPreferences.getInt(quantityKey, 1)
 
-        // Сохраняем данные
-        editor.remove("${uniqueKey}_name") // Название блюда
-        editor.remove("${uniqueKey}_priceWithRub") // Название блюда
-        editor.remove("${uniqueKey}_image") // Изображение в Base64
-        editor.apply()
-        val numberRegex = Regex("(\\d+)")
-        val numberMatch = numberRegex.find(item.priceWithRub)
-        val price = numberMatch?.value?.toIntOrNull()
-        totalPrice -= price!!
-        text_price.setText(totalPrice.toString() + " руб")
-        data.remove(item)
-        adapter.notifyDataSetChanged()
+            // Извлекаем цену за один экземпляр блюда
+            val numberRegex = Regex("(\\d+)")
+            val numberMatch = numberRegex.find(item.priceWithRub)
+            val pricePerItem = numberMatch?.value?.toIntOrNull() ?: 0
+
+            if (currentQuantity > 1) {
+                // Если количество больше 1, уменьшаем его на 1
+                val newQuantity = currentQuantity - 1
+                editor.putInt(quantityKey, newQuantity)
+
+                // Обновляем количество в списке данных
+                val index = data.indexOfFirst { it.text == item.text }
+                if (index != -1) {
+                    data[index].quantity = newQuantity
+                    adapter.notifyItemChanged(index)
+                }
+            } else {
+                // Если количество равно 1, удаляем блюдо из SharedPreferences и списка данных
+                editor.remove("${existingKey}_name")
+                editor.remove("${existingKey}_priceWithRub")
+                editor.remove("${existingKey}_image")
+                editor.remove(quantityKey)
+
+                val index = data.indexOfFirst { it.text == item.text }
+                if (index != -1) {
+                    data.removeAt(index)
+                    adapter.notifyItemRemoved(index)
+                }
+            }
+
+            // Вычитаем стоимость одного экземпляра блюда из общей стоимости
+            totalPrice -= pricePerItem
+            text_price.text = "$totalPrice руб"
+
+            editor.apply() // Применяем изменения в SharedPreferences
+        }
+        Log.d("Cat", totalPrice.toString())
     }
-
 }
+
+    private fun findExistingItemKey(sharedPreferences: SharedPreferences, itemName: String): String? {
+        val allEntries = sharedPreferences.all
+        for ((key, value) in allEntries) {
+            if (key.endsWith("_name") && value == itemName) {
+                return key.replace("_name", "")
+            }
+        }
+        return null
+    }
