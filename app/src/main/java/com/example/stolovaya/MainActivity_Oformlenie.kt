@@ -78,18 +78,30 @@ class MainActivity_Oformlenie : AppCompatActivity() {
 //                items.add(InOformlenie(value.toString()))
 //            }
         }
-        for ((key, value) in allEntries){
-            if (key.endsWith("_priceWithRub")) {
-                val priceKey = key.replace("_name", "_priceWithRub")
-                val priceValue = sharedPreferences.getString(priceKey, null)
-                val numberRegex = Regex("(\\d+)")
-                val numberMatch = numberRegex.find(priceValue!!)
-                val price = numberMatch?.value?.toIntOrNull()
-                if (price != null) {
-                    totalPrice += price
 
-                }
-                text_price.setText(totalPrice.toString() + " руб")
+        for ((key, value) in allEntries) {
+            if (key.endsWith("_name")) {
+                val itemKey = key.replace("_name", "")
+
+                val pricePerItemKey = "${itemKey}_pricePerItem"
+                val quantityKey = "${itemKey}_quantity"
+
+
+                val pricePerItemValue = sharedPreferences.getString(pricePerItemKey, null)
+                val quantity = sharedPreferences.getInt(quantityKey, 1)
+
+
+
+                    // Извлекаем цену за единицу блюда
+                    val numberRegex = Regex("(\\d+)")
+                    val numberMatch = numberRegex.find(pricePerItemValue.toString())
+                    val pricePerItem = numberMatch?.value?.toIntOrNull() ?: 0
+
+                    // Рассчитываем общую стоимость с учётом количества
+                    totalPrice += pricePerItem * quantity
+                    text_price.text = "$totalPrice руб"
+
+
                 priceInBd = totalPrice.toString()
             }
         }
