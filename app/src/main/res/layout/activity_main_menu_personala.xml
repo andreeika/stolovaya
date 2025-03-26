@@ -7,6 +7,7 @@
     android:background="#64B5F6"
     tools:context=".MainActivity_MenuPersonala">
 
+
     <Button
         android:id="@+id/saveButton"
         android:layout_width="200dp"
@@ -23,8 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.791" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview2"
+        app:layout_constraintVertical_bias="0.241" />
 
     <TextView
         android:id="@+id/textView8"
@@ -43,10 +44,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206"
+        app:layout_constraintVertical_bias="0.227"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
@@ -58,8 +59,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923"
+        app:layout_constraintTop_toBottomOf="@+id/saveButton"
+        app:layout_constraintVertical_bias="0.551"
         app:srcCompat="@drawable/sibsiu_logo_main" />
 
     <ImageView
@@ -73,7 +74,7 @@
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058"
+        app:layout_constraintVertical_bias="0.04"
         app:srcCompat="@drawable/mask_group" />
 
     <Button
@@ -88,25 +89,34 @@
         android:textAlignment="center"
         android:textSize="24sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview2"
-        android:layout_width="390dp"
-        android:layout_height="357dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="394dp"
+        android:layout_height="373dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
         tools:itemCount="10"
         tools:listitem="@layout/card_view_spisok" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="372dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="12dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

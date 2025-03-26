@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
     private val items = mutableListOf<ItemsViewModel_spisok>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var logoBack: ImageView
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,6 +146,19 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
                 Toast.makeText(this@MainActivity_MenuPersonala, "Ошибка сохранения: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
+
+        searchView = findViewById(R.id.searchView)
+
+
+        // Настройка поиска
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText.orEmpty())
+                return true
+            }
+        })
     }
 }
 
