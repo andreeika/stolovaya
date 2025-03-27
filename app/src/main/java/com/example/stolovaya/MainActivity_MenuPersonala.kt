@@ -39,6 +39,7 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main_menu_personala)
 
+
         //Цвет для строки состояния
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = ContextCompat.getColor(this, R.color.my_status_bar_color)
