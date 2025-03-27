@@ -23,7 +23,7 @@ import kotlin.random.Random
 class MainActivity_Oformlenie : AppCompatActivity() {
     var connect: Connection? = null
     var connectionResult: String = ""
-    private val data = ArrayList<InOformlenie>()
+
     private lateinit var save_button: Button
     private lateinit var text_price: TextView
     private lateinit var table: TextView
@@ -70,14 +70,6 @@ class MainActivity_Oformlenie : AppCompatActivity() {
         var totalPrice = 0
         text_price = findViewById(R.id.textView14)
 
-        for ((key, value) in allEntries) {
-            if (key.endsWith("_name")) {
-                items.add(InOformlenie(value.toString()))
-            }
-//            if (key.endsWith("_priceWithRub")) {
-//                items.add(InOformlenie(value.toString()))
-//            }
-        }
 
         for ((key, value) in allEntries) {
             if (key.endsWith("_name")) {
@@ -86,11 +78,8 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                 val pricePerItemKey = "${itemKey}_pricePerItem"
                 val quantityKey = "${itemKey}_quantity"
 
-
                 val pricePerItemValue = sharedPreferences.getString(pricePerItemKey, null)
                 val quantity = sharedPreferences.getInt(quantityKey, 1)
-
-
 
                     // Извлекаем цену за единицу блюда
                     val numberRegex = Regex("(\\d+)")
@@ -101,13 +90,15 @@ class MainActivity_Oformlenie : AppCompatActivity() {
                     totalPrice += pricePerItem * quantity
                     text_price.text = "$totalPrice руб"
 
-
+                items.add(InOformlenie(
+                    text = value.toString(),
+                    quantity = quantity
+                ))
                 priceInBd = totalPrice.toString()
             }
         }
 
-        val selectedDishNames = items.map { it.text }
-        val selectedDishesString = selectedDishNames.joinToString(", ")
+        val selectedDishesString = items.joinToString(", ") { "${it.text} (${it.quantity})" }
 
 
         save_button = findViewById(R.id.saveButton3)

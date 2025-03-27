@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class InOformlenie(val text: String)
+data class InOformlenie(val text: String, var quantity: Int = 1)
 class Oformlenie(private val data: ArrayList<InOformlenie>){
 
 }
@@ -53,6 +53,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
         if (holder.itemView.context is MainActivity_Korzina) {
             holder.quantity.visibility = View.VISIBLE
             holder.quantity.text = ItemsViewModel.quantity.toString()
+
         }
     }
 
