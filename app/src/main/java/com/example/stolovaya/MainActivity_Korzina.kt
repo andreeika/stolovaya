@@ -23,16 +23,16 @@ import androidx.recyclerview.widget.RecyclerView
 import java.io.ByteArrayOutputStream
 import java.sql.Connection
 
-class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListener {
+class MainActivity_Korzina : AppCompatActivity(), CustomAdapter_Korzina.OnItemClickListener {
     var connect: Connection? = null
     var connectionResult: String = ""
-    private val data = ArrayList<ItemsViewModel>()
+    private val data = ArrayList<ItemsViewModel_Korzina>()
     private lateinit var btnClear: Button
     private lateinit var progressBar: ProgressBar // ProgressBar крутилка загрузки
     private lateinit var logoBack: ImageView
     private lateinit var save_button: Button
     private lateinit var text_price: TextView
-    private lateinit var adapter: CustomAdapter
+    private lateinit var adapter: CustomAdapter_Korzina
     var totalPrice: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         val recyclerview = findViewById<RecyclerView>(R.id.rvKorzina)
         recyclerview.layoutManager = GridLayoutManager(this, 1)
 
-        adapter = CustomAdapter(data, this)//с помощью адаптера принимаем информацию
+        adapter = CustomAdapter_Korzina(data, this)//с помощью адаптера принимаем информацию
         recyclerview.adapter = adapter
 
         text_price = findViewById(R.id.textView19)
@@ -68,7 +68,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
                     val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
-                    val newItem = ItemsViewModel(bitmap, name, priceWithRub, quantity)
+                    val newItem = ItemsViewModel_Korzina(bitmap, name, priceWithRub, quantity)
                     data.add(newItem)
 
                     // Извлекаем цену за единицу блюда
@@ -118,7 +118,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
 
     }
 
-    override fun onKorzinaClick(item: ItemsViewModel) {
+    override fun onKorzinaClick(item: ItemsViewModel_Korzina) {
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 

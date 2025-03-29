@@ -12,23 +12,48 @@
     app:circularflow_radiusInDP="100dp">
 
 
+    <Button
+        android:id="@+id/buttonDel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ripple_effect_btn_add"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        app:backgroundTint="@null"
+        app:icon="@android:drawable/ic_menu_add"
+        app:iconPadding="0dp"
+        app:iconSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintStart_toEndOf="@+id/buttonAdd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:scaleType="fitXY"
         app:circularflow_defaultRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="150dp"
-        android:layout_height="65dp"
+        android:layout_width="219dp"
+        android:layout_height="46dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center_vertical|center_horizontal"
         android:text="Item"
@@ -36,14 +61,15 @@
         android:textColor="#FFFDFD"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageview"
-        app:layout_constraintStart_toStartOf="@+id/imageview"
-        app:layout_constraintTop_toBottomOf="@+id/imageview"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toEndOf="@+id/imageview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="150dp"
+        android:layout_width="80dp"
         android:layout_height="21dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center_vertical|center_horizontal"
@@ -52,11 +78,11 @@
         android:textColor="#FFFDFD"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toEndOf="@+id/imageview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <Button
         android:id="@+id/buttonAdd"
@@ -75,10 +101,10 @@
         app:iconSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintStart_toEndOf="@+id/imageview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -86,13 +112,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quantity"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonDel"
+        app:layout_constraintStart_toEndOf="@+id/buttonAdd"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.73" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
