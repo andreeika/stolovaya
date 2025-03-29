@@ -41,7 +41,7 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter.OnItemClickListe
         setContentView(R.layout.activity_main_korzina)
 
         val recyclerview = findViewById<RecyclerView>(R.id.rvKorzina)
-        recyclerview.layoutManager = GridLayoutManager(this, 2)
+        recyclerview.layoutManager = GridLayoutManager(this, 1)
 
         adapter = CustomAdapter(data, this)//с помощью адаптера принимаем информацию
         recyclerview.adapter = adapter

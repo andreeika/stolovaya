@@ -113,6 +113,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.460" />
+        app:layout_constraintVertical_bias="0.460"
+        tools:listitem="@layout/card_view_design_salades" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

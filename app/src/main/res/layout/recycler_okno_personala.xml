@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/textView20"
         android:layout_width="274dp"
-        android:layout_height="110dp"
+        android:layout_height="150dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center_vertical|center_horizontal"
         android:text="Item"
