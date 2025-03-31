@@ -13,7 +13,7 @@
 
 
     <Button
-        android:id="@+id/buttonDel"
+        android:id="@+id/buttonAdd"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ripple_effect_btn_add"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.745"
-        app:layout_constraintStart_toEndOf="@+id/buttonAdd"
+        app:layout_constraintStart_toEndOf="@+id/buttonDel"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.925"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -85,7 +85,7 @@
         app:layout_constraintVertical_bias="0.42000002" />
 
     <Button
-        android:id="@+id/buttonAdd"
+        android:id="@+id/buttonDel"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ripple_effect_btn_add"
@@ -114,8 +114,8 @@
         android:text="Quantity"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDel"
-        app:layout_constraintStart_toEndOf="@+id/buttonAdd"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
+        app:layout_constraintStart_toEndOf="@+id/buttonDel"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.73" />
 

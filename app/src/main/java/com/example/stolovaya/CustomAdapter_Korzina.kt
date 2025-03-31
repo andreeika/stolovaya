@@ -16,7 +16,8 @@ class CustomAdapter_Korzina(private val mList: List<ItemsViewModel_Korzina>, pri
     RecyclerView.Adapter<CustomAdapter_Korzina.ViewHolder>() {
     // Интерфейс для обработки нажатий на кнопку
     interface OnItemClickListener {
-        fun onKorzinaClick(item: ItemsViewModel_Korzina)
+        fun AddDish(item: ItemsViewModel_Korzina)
+        fun DeleteDish(item: ItemsViewModel_Korzina)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,9 +33,12 @@ class CustomAdapter_Korzina(private val mList: List<ItemsViewModel_Korzina>, pri
 
         val ItemsViewModel_Korzina = mList[position]
         Log.d("Adapter", "Binding item: ${ItemsViewModel_Korzina.text}, Quantity: ${ItemsViewModel_Korzina.quantity}")
-        holder.btn.setOnClickListener {
-            listener.onKorzinaClick(ItemsViewModel_Korzina)// при нажатии на кнопку "+" интерфейс переносит информацию
+        holder.btnAdd.setOnClickListener {
+            listener.AddDish(ItemsViewModel_Korzina)// при нажатии на кнопку "+" интерфейс переносит информацию
             // о конкретном блюде в корзину
+        }
+        holder.btnDel.setOnClickListener {
+            listener.DeleteDish(ItemsViewModel_Korzina)
         }
         holder.textView.text = ItemsViewModel_Korzina.text
         holder.textView_price.text = ItemsViewModel_Korzina.priceWithRub
@@ -63,7 +67,8 @@ class CustomAdapter_Korzina(private val mList: List<ItemsViewModel_Korzina>, pri
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textView_price: TextView = itemView.findViewById(R.id.textView18)
-        val btn: Button = itemView.findViewById(R.id.buttonAdd)
+        val btnAdd: Button = itemView.findViewById(R.id.buttonAdd)
+        val btnDel: Button = itemView.findViewById(R.id.buttonDel)
         val quantity: TextView = itemView.findViewById(R.id.quantity)
     }
 

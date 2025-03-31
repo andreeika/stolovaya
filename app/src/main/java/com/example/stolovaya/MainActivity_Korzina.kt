@@ -118,7 +118,41 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter_Korzina.OnItemCl
 
     }
 
-    override fun onKorzinaClick(item: ItemsViewModel_Korzina) {
+    override fun AddDish(item: ItemsViewModel_Korzina) {
+        Log.d("Cat", "Это происходит тут")
+        val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // Находим ключ блюда в SharedPreferences
+        val existingKey = findExistingItemKey(sharedPreferences, item.text)
+        if (existingKey != null) {
+            // Получаем текущее количество блюда
+            val quantityKey = "${existingKey}_quantity"
+            val currentQuantity = sharedPreferences.getInt(quantityKey, 1)
+
+            // Извлекаем цену за один экземпляр блюда
+            val numberRegex = Regex("(\\d+)")
+            val numberMatch = numberRegex.find(item.priceWithRub)
+            val pricePerItem = numberMatch?.value?.toIntOrNull() ?: 0
+            val newQuantity = currentQuantity + 1
+            editor.putInt(quantityKey, newQuantity)
+
+            // Обновляем количество в списке данных
+            val index = data.indexOfFirst { it.text == item.text }
+            if (index != -1) {
+                data[index].quantity = newQuantity
+                adapter.notifyItemChanged(index)
+            }
+
+            // Вычитаем стоимость одного экземпляра блюда из общей стоимости
+            totalPrice += pricePerItem
+            text_price.text = "$totalPrice руб"
+
+            editor.apply() // Применяем изменения в SharedPreferences
+        }
+    }
+
+    override fun DeleteDish(item: ItemsViewModel_Korzina) {
         val sharedPreferences = getSharedPreferences("Korzina", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
@@ -167,8 +201,8 @@ class MainActivity_Korzina : AppCompatActivity(), CustomAdapter_Korzina.OnItemCl
         }
         Log.d("Cat", totalPrice.toString())
     }
-}
 
+}
     private fun findExistingItemKey(sharedPreferences: SharedPreferences, itemName: String): String? {
         val allEntries = sharedPreferences.all
         for ((key, value) in allEntries) {

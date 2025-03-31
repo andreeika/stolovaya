@@ -67,7 +67,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val listene
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textView_price: TextView = itemView.findViewById(R.id.textView18)
-        val btn: Button = itemView.findViewById(R.id.buttonAdd)
+        val btn: Button = itemView.findViewById(R.id.buttonDel)
         val quantity: TextView = itemView.findViewById(R.id.quantity)
     }
 
