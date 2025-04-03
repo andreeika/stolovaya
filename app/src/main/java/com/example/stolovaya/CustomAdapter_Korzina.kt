@@ -67,8 +67,8 @@ class CustomAdapter_Korzina(private val mList: List<ItemsViewModel_Korzina>, pri
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textView_price: TextView = itemView.findViewById(R.id.textView18)
-        val btnAdd: Button = itemView.findViewById(R.id.buttonAdd)
-        val btnDel: Button = itemView.findViewById(R.id.buttonDel)
+        val btnAdd: ImageView = itemView.findViewById(R.id.imageViewAdd)
+        val btnDel: ImageView = itemView.findViewById(R.id.imageViewMinus)
         val quantity: TextView = itemView.findViewById(R.id.quantity)
     }
 

@@ -12,29 +12,6 @@
     app:circularflow_radiusInDP="100dp">
 
 
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ripple_effect_btn_add"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:icon="@android:drawable/ic_menu_add"
-        app:iconPadding="0dp"
-        app:iconSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.745"
-        app:layout_constraintStart_toEndOf="@+id/buttonDel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="150dp"
@@ -84,40 +61,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.42000002" />
 
-    <Button
-        android:id="@+id/buttonDel"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ripple_effect_btn_add"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:icon="@android:drawable/ic_menu_add"
-        app:iconPadding="0dp"
-        app:iconSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
-        app:layout_constraintStart_toEndOf="@+id/imageview"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Quantity"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
-        app:layout_constraintStart_toEndOf="@+id/buttonDel"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewAdd"
+        app:layout_constraintStart_toEndOf="@+id/imageViewMinus"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintVertical_bias="0.809" />
+
+    <ImageView
+        android:id="@+id/imageViewMinus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962"
+        app:srcCompat="@drawable/minus" />
+
+    <ImageView
+        android:id="@+id/imageViewAdd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/ripple_effect_btn_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962"
+        app:srcCompat="@drawable/plus" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,29 +58,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/buttonDel"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ripple_effect_btn_add"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:icon="@android:drawable/ic_menu_add"
-        app:iconPadding="0dp"
-        app:iconSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
@@ -93,6 +70,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.723" />
+
+    <ImageView
+        android:id="@+id/imageViewPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect_btn_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/plus" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
