@@ -12,12 +12,18 @@ public class ConnectionHelper {
     @SuppressLint("NewApi")
     public Connection connectionclass()
     {
-      ip = "192.168.0.180";
+//      ip = "192.168.0.180";
+//       database = "столовая";
+//       uname = "user2";
+//       pass = "user123456";
+//        port = "1433";
+
+        //для ноута
+       ip = "172.20.10.6";
        database = "столовая";
        uname = "user2";
        pass = "user123456";
         port = "1433";
-
 
 //        ip = "192.168.0.102";
 //        database = "столовая2";
