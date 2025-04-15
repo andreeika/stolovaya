@@ -1,11 +1,14 @@
 package com.example.stolovaya
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -150,6 +153,21 @@ class MainActivity_MenuPersonala : AppCompatActivity() {
 
         searchView = findViewById(R.id.searchView)
 
+        val parentLayout =  findViewById<ViewGroup>(R.id.constraintMenu)
+
+        parentLayout.setOnClickListener {
+            // Убираем фокус с SearchView
+            searchView.clearFocus()
+
+            // Скрываем клавиатуру
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(searchView.windowToken, 0)
+        }
+
+// Расширяем область клика
+        searchView.setOnClickListener {
+            searchView.isIconified = false // Развернуть SearchView при клике в любом месте
+        }
 
         // Настройка поиска
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
