@@ -150,7 +150,8 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true // Обработано
                 }
-                R.id.menu_item_2 -> {
+                R.id.menu_item_2 -> { val intent = Intent(this@MainActivity, MainActivity_About::class.java)
+                    startActivity(intent)
                     true // Обработано
                 }
 

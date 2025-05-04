@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Stolovaya"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity_About"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity_Oformlenie"
             android:exported="false" />
         <activity
